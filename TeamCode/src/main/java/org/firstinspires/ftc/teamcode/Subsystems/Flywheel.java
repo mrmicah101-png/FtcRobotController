@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+@Config
 public class Flywheel {
 
     DcMotorEx rightMotor;
@@ -32,13 +34,15 @@ public class Flywheel {
 
     State currentState =State.OFF;
     double targetTPM = 1250;
-    double kF = 0.00035;
-    public void update() {
-        double targetPower = targetRPM = MP =
-        switch (currentState) {
+    double kF = 0.00041;
+    double KF = 0;
+    public void update(){
+        double targetPower = targetTPM * kF;
+        double error = targetTPM - rightMotor.getVelocity();
+        switch (currentState){
             case ON:
-                rightMotor.setPower(targetTPM*kF);
-                leftMotor.setPower(targetTPM*kF);
+                rightMotor.setPower(targetPower);
+                leftMotor.setPower(targetPower);
                 break;
             case OFF:
                 rightMotor.setPower(0);
