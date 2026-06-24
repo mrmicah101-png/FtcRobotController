@@ -23,17 +23,15 @@ public class Gate {
             gate = hardwareMap.servo.get("gate");
         }
     public void update(){
-        switch (currentState){
+        switch (currentState) {
             case CLOSE:
-            gate.setPosition(closePos);
-            break;
+                gate.setPosition(closePos);
+                break;
             case OPEN:
-                if (System.currentTimeMillis() - startTime > openTime){
+                if (System.currentTimeMillis() - startTime > openTime) {
                     currentState = State.CLOSE;
                 }
                 gate.setPosition(openPos);
                 break;
         }
     }
-
-
